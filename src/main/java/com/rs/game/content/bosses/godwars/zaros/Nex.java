@@ -67,7 +67,7 @@ public final class Nex extends NPC {
 		setLureDelay(3000);
 		setIntelligentRouteFinder(true);
 		setRun(true);
-		bloodReavers = new NPC[3];
+		bloodReavers = new NPC[2];
 		setIgnoreDocile(true);
 		phase = Phase.SMOKE;
 		attackCount = 1;
@@ -220,7 +220,6 @@ public final class Nex extends NPC {
 			voiceEffect(3306, true);
 		} else if (phase == Phase.BLOOD && minionStage == 3) {
 			setCapDamage(500);
-			killBloodReavers();
 			setNextForceTalk(new ForceTalk("Infuse me with the power of ice!"));
 			World.sendProjectile(arena.glacies, this, 2244, new Pair<>(18, 18), 60, 5, 0);
 			getCombat().addCombatDelay(1);
@@ -339,9 +338,9 @@ public final class Nex extends NPC {
 				continue;
 			NPC npc = bloodReavers[index];
 			bloodReavers[index] = null;
-			if (npc.isDead())
+			if (npc.isDead() || npc.hasFinished())
 				return;
-			heal(npc.getHitpoints());
+			healHit(npc.getHitpoints());
 			npc.sendDeath(this);
 		}
 	}
