@@ -317,10 +317,10 @@ public final class Nex extends NPC {
 
 	@Override
 	public void handlePreHitOut(Entity target, Hit hit) {
-		if (getId() == 13448 && hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE || hit.getLook() == HitLook.RANGE_DAMAGE)
+		if (getId() == 13448 && hit.getDamage() > 0 && (hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE || hit.getLook() == HitLook.RANGE_DAMAGE))
 			target.sendSoulSplit(hit, this);
-		if (phase == Phase.BLOOD && hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE)
-			target.healHit((int) (hit.getDamage() * 0.15));
+		if (phase == Phase.BLOOD && hit.getDamage() > 15 && (hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE))
+			healHit((int) (hit.getDamage() * 0.15));
 	}
 
 	public boolean isFollowTarget() {
