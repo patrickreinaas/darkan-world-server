@@ -315,6 +315,14 @@ public final class Nex extends NPC {
 		return arena.getPossibleTargets();
 	}
 
+	@Override
+	public void handlePreHitOut(Entity target, Hit hit) {
+		if (getId() == 13448 && hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE || hit.getLook() == HitLook.RANGE_DAMAGE)
+			target.sendSoulSplit(hit, this);
+		if (phase == Phase.BLOOD && hit.getLook() == HitLook.MELEE_DAMAGE || hit.getLook() == HitLook.MAGIC_DAMAGE)
+			target.healHit((int) (hit.getDamage() * 0.15));
+	}
+
 	public boolean isFollowTarget() {
 		return followTarget;
 	}
